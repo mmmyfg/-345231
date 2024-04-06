@@ -1,0 +1,236 @@
+<head>
+  <title>商品搜索和购物车</title>
+  <style>
+    /* CSS样式 */
+    @keyframes backgroundAnimation {
+      0% {
+        background-color: #FFC0CB; /* 起始颜色为粉色 */
+      }
+      50% {
+        background-color: #87CEEB; /* 中间颜色为天蓝色 */
+      }
+      100% {
+        background-color: #FFC0CB; /* 结束颜色为粉色 */
+      }
+    }
+    
+    body {
+      animation: backgroundAnimation 6s infinite; /* 6秒的动画循环 */
+    }
+    .search-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 100px;
+    }
+    .search-input {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      transition: box-shadow 0.3s ease;
+    }
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .search-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .search-button:hover {
+      background-color: #45a049;
+    }
+    .select-module {
+      margin-left: 10px;
+    }
+    /* 购物车样式 */
+    .cart-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer; /* 让购物车容器变为可点击 */
+    }
+    .cart-container:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .remove-button {
+      cursor: pointer;
+      color: red;
+      margin-left: 10px;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="search-form">
+    <input class="search-input" type="text" id="searchQuery" placeholder="search products...">
+    <button class="search-button" onclick="searchProducts()">search</button>
+  </div>
+  
+  <div id="searchResults">
+    <!-- 搜索结果将显示在这里 -->
+  </div>
+  
+  <div class="cart-container">
+    <h3>shopping cart</h3>
+    <ul id="cartItems">
+      <!-- 购物车商品列表 -->
+    </ul>
+    <div>总价: <span id="totalPrice">0</span></div>
+  </div>
+  
+  <script>
+    var productsData = [
+      {
+        "id": 1,
+        "category": "drinks",
+        "name": "coke",
+        "price": 3.00
+      },
+      {
+        "id": 2,
+        "category": "foods",
+        "name": "ham",
+        "price": 5.00
+      },
+      {
+        "id": 3,
+        "category": "groceries",
+        "name": "bread",
+        "price": 2.50
+      }
+    ];
+    var currentFilteredProducts = [];  // 存储当前过滤后的产品列表
+    var cart = [];  // 存储购物车中的产品列表
+
+    function searchProducts() {
+      var query = document.getElementById('searchQuery').value.toLowerCase();
+      var searchResults = document.getElementById('searchResults');
+
+      currentFilteredProducts = productsData.filter(function(product) {
+        return product.name.toLowerCase().includes(query);
+      });
+
+      currentFilteredProducts.sort(function(a, b) { return a.price - b.price; });
+      var topProducts = currentFilteredProducts.slice(0, 5);
+
+      searchResults.innerHTML = topProducts.map(function(product, index) {
+        return `<div>${product.name} - $${product.price.toFixed(2)} <button onclick="addToCart(${index})">加入购物车</button></div>`;
+      }).join('');
+    }
+
+    function addToCart(index) {
+      var product = currentFilteredProducts[index];
+      cart.push(product);
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);  // 移除指定索引的商品
+      updateCart();  // 更新购物车显示
+    }
+
+    function updateCart() {
+      var cartItems = document.getElementById('cartItems');
+      cartItems.innerHTML = cart.map(function(item, index) {
+        return `<li>${item.name} - $${item.price.toFixed(2)} <button class='remove-button' onclick='removeFromCart(${index})'>remove</button></li>`;
+      }).join('');
+      
+      var totalPrice = cart.reduce(function(sum, item) {
+        return sum + item.price;
+      }, 0);
+      
+      document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
